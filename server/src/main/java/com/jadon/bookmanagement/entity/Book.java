@@ -1,6 +1,7 @@
 package com.jadon.bookmanagement.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -11,7 +12,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "book")
 @AllArgsConstructor
-@Getter
+@Data
 public class Book {
 
     @Id
