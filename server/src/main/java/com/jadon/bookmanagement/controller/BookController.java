@@ -1,11 +1,14 @@
 package com.jadon.bookmanagement.controller;
 
+import com.jadon.bookmanagement.dto.APIResponse;
 import com.jadon.bookmanagement.dto.BookRequestDTO;
 import com.jadon.bookmanagement.entity.Book;
 import com.jadon.bookmanagement.service.BookService;
 import com.jadon.bookmanagement.util.ValueMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -17,33 +20,61 @@ import java.util.List;
 @AllArgsConstructor
 public class BookController {
 
+    private static final String RESPONSE_STATUS = "success";
+
     @Autowired
     private final BookService bookService;
     @GetMapping
-    public List<Book> getBooks() {
-        return this.bookService.getBooks();
+    public ResponseEntity<APIResponse> getBooks() {
+        List<Book> books =  this.bookService.getBooks();
+        APIResponse<List<Book>> response = APIResponse.<List<Book>>builder().status(RESPONSE_STATUS).results(books).build();
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping(path = "{id}")
-    public Book getBook(@PathVariable("id") long id) {
-        return this.bookService.getBook(id);
+    public ResponseEntity<APIResponse> getBook(@PathVariable("id") long id) {
+        Book book = this.bookService.getBook(id);
+        APIResponse<Book> response = APIResponse.<Book>builder().status(RESPONSE_STATUS).results(book).build();
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping
-    public Book createNewBook(@RequestBody @Valid BookRequestDTO bookRequestDTO) {
+    public ResponseEntity<APIResponse> createNewBook(@RequestBody @Valid BookRequestDTO bookRequestDTO) {
         Book book = ValueMapper.convertToEntity(bookRequestDTO);
-        return this.bookService.addBook(book);
+
+        Book updatedBook = this.bookService.addBook(book);
+        APIResponse<Book> response = APIResponse
+                .<Book>builder()
+                .status(RESPONSE_STATUS)
+                .results(updatedBook)
+                .build();
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PutMapping(path = "{id}")
-    public Book updateBook(@PathVariable("id") long id, @RequestBody @Valid BookRequestDTO bookRequestDTO) throws Exception {
+    public ResponseEntity<APIResponse> updateBook(@PathVariable("id") long id, @RequestBody @Valid BookRequestDTO bookRequestDTO) throws Exception {
         Book book = ValueMapper.convertToEntity(bookRequestDTO);
         book.setId(id);
-        return this.bookService.updateBook(book);
+
+        Book updatedBook = this.bookService.addBook(book);
+        APIResponse<Book> response = APIResponse
+                .<Book>builder()
+                .status(RESPONSE_STATUS)
+                .results(updatedBook)
+                .build();
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @DeleteMapping(path = "{id}")
-    public void deleteBook(@PathVariable("id") long id) throws Exception {
+    public ResponseEntity<APIResponse> deleteBook(@PathVariable("id") long id) throws Exception {
         this.bookService.deleteBook(id);
+
+        APIResponse response = APIResponse.builder().status(RESPONSE_STATUS).build();
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
