@@ -33,7 +33,7 @@ public class BookService {
         return this.bookRepository.save(updatedBook);
     }
 
-    public void deleteBook(long id)  throws Exception {
+    public void deleteBook(long id) throws Exception {
         this.checkExisting(id);
         this.bookRepository.deleteById(id);
     }
