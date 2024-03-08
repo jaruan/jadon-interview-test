@@ -1,15 +1,19 @@
 import { Modal } from "antd";
 
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, type FormProps } from "antd";
 import { IBookRequestDTO } from "../../../dto/book";
 
-export default function ActionModal(props: IActionModalProps) {
+export default function EditBookModal(props: IEditBookModalProps) {
+  const onFinish: FormProps<IBookRequestDTO>["onFinish"] = (values) => {
+    props.onSubmitForm(values);
+  };
+
   return (
     <>
       <Modal
         centered
         title={props.header}
-        open={props.visible}
+        open={true}
         width={800}
         footer={null}
         onCancel={() => props.onClose()}
@@ -19,11 +23,16 @@ export default function ActionModal(props: IActionModalProps) {
           labelCol={{ span: 8 }}
           wrapperCol={{ span: 16 }}
           style={{ maxWidth: 600 }}
-          initialValues={{ remember: true }}
-          // onFinish={onFinish}
+          initialValues={props.data || {}}
+          onFinish={onFinish}
           // onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
+          {props?.data?.id && (
+            <Form.Item<IBookRequestDTO> label="Id" name="id">
+              <Input contentEditable={false} disabled value={props.data.id} />
+            </Form.Item>
+          )}
           <Form.Item<IBookRequestDTO>
             label="Title"
             name="title"
@@ -60,9 +69,9 @@ export default function ActionModal(props: IActionModalProps) {
   );
 }
 
-export interface IActionModalProps {
+export interface IEditBookModalProps {
   header: string;
-  visible: boolean;
-  data?: IBookRequestDTO;
+  data?: IBookRequestDTO | null;
   onClose: () => void;
+  onSubmitForm: (bookRequestDTO: IBookRequestDTO) => void;
 }
