@@ -1,6 +1,7 @@
 package com.jadon.bookmanagement.service;
 
 import com.jadon.bookmanagement.entity.Book;
+import com.jadon.bookmanagement.exception.NotFoundException;
 import com.jadon.bookmanagement.repository.BookRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class BookService {
 
     public Book getBook(long id) {
 
-        return this.bookRepository.findById(id).orElseThrow(() -> new IllegalStateException("Book with id " + id + " does not exist"));
+        return this.bookRepository.findById(id).orElseThrow(() -> new NotFoundException("Book with id " + id + " does not exist"));
     }
 
     public List<Book> getBooks() {
@@ -28,21 +29,20 @@ public class BookService {
         return this.bookRepository.save(book);
     }
 
-    public Book updateBook(Book book) throws Exception {
+    public Book updateBook(Book book) {
         this.checkExisting(book.getId());
         return this.bookRepository.save(book);
     }
 
-    public void deleteBook(long id) throws Exception {
+    public void deleteBook(long id) {
         this.checkExisting(id);
         this.bookRepository.deleteById(id);
     }
 
-    public void checkExisting(long id) throws Exception{
+    public void checkExisting(long id) {
         boolean isExisted = this.bookRepository.existsById(id);
         if (!isExisted) {
-            // Todo: update the exception message
-            throw new Exception("a");
+            throw new NotFoundException("Book with id " + id + " does not exist");
         }
     }
 }

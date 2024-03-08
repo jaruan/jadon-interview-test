@@ -14,4 +14,5 @@ public class ValueMapper {
         book.setPublicationYear(bookRequestDTO.getPublicationYear());
         return book;
     }
+
 }
