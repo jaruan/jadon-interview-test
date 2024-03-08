@@ -1,10 +1,10 @@
 import { Modal } from "antd";
 
 import { Button, Form, Input, type FormProps } from "antd";
-import { IBookRequestDTO } from "../../../dto/book";
+import { IBookDTO } from "../../../dto/book";
 
 export default function EditBookModal(props: IEditBookModalProps) {
-  const onFinish: FormProps<IBookRequestDTO>["onFinish"] = (values) => {
+  const onFinish: FormProps<IBookDTO>["onFinish"] = (values) => {
     props.onSubmitForm(values);
   };
 
@@ -29,11 +29,11 @@ export default function EditBookModal(props: IEditBookModalProps) {
           autoComplete="off"
         >
           {props?.data?.id && (
-            <Form.Item<IBookRequestDTO> label="Id" name="id">
+            <Form.Item<IBookDTO> label="Id" name="id">
               <Input contentEditable={false} disabled value={props.data.id} />
             </Form.Item>
           )}
-          <Form.Item<IBookRequestDTO>
+          <Form.Item<IBookDTO>
             label="Title"
             name="title"
             rules={[
@@ -43,18 +43,15 @@ export default function EditBookModal(props: IEditBookModalProps) {
             <Input />
           </Form.Item>
 
-          <Form.Item<IBookRequestDTO> label="Author" name="author">
+          <Form.Item<IBookDTO> label="Author" name="author">
             <Input />
           </Form.Item>
 
-          <Form.Item<IBookRequestDTO>
-            label="Publication Year"
-            name="publicationYear"
-          >
+          <Form.Item<IBookDTO> label="Publication Year" name="publicationYear">
             <Input />
           </Form.Item>
 
-          <Form.Item<IBookRequestDTO> label="ISBN" name="isbn">
+          <Form.Item<IBookDTO> label="ISBN" name="isbn">
             <Input />
           </Form.Item>
 
@@ -71,7 +68,7 @@ export default function EditBookModal(props: IEditBookModalProps) {
 
 export interface IEditBookModalProps {
   header: string;
-  data?: IBookRequestDTO | null;
+  data?: IBookDTO | null;
   onClose: () => void;
-  onSubmitForm: (bookRequestDTO: IBookRequestDTO) => void;
+  onSubmitForm: (bookRequestDTO: IBookDTO) => void;
 }

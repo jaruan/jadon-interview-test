@@ -1,15 +1,12 @@
-export interface IBookRequestDTO {
-  id?: string;
+export interface IBookDTO {
+  id: number;
   title: string;
   author?: string;
   isbn?: string;
   publicationYear?: string;
 }
 
-export interface IBookResponseDTO {
-  id: string;
-  title: string;
-  author?: string;
-  isbn?: string;
-  publicationYear?: string;
+export interface IBookDTOWithPage {
+  results: IBookDTO[];
+  totalPage: number;
 }
