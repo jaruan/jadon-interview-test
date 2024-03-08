@@ -25,7 +25,7 @@ public class BookController {
     @Autowired
     private final BookService bookService;
     @GetMapping
-    public ResponseEntity<APIResponse> getBooks() {
+    public ResponseEntity<APIResponse<List<Book>>> getBooks() {
         List<Book> books =  this.bookService.getBooks();
         APIResponse<List<Book>> response = APIResponse.<List<Book>>builder().status(RESPONSE_STATUS).results(books).build();
 
@@ -33,7 +33,7 @@ public class BookController {
     }
 
     @GetMapping(path = "{id}")
-    public ResponseEntity<APIResponse> getBook(@PathVariable("id") long id) {
+    public ResponseEntity<APIResponse<Book>> getBook(@PathVariable("id") long id) {
         Book book = this.bookService.getBook(id);
         APIResponse<Book> response = APIResponse.<Book>builder().status(RESPONSE_STATUS).results(book).build();
 
@@ -41,7 +41,7 @@ public class BookController {
     }
 
     @PostMapping
-    public ResponseEntity<APIResponse> createNewBook(@RequestBody @Valid BookRequestDTO bookRequestDTO) {
+    public ResponseEntity<APIResponse<Book>> createNewBook(@RequestBody @Valid BookRequestDTO bookRequestDTO) {
         Book book = ValueMapper.convertToEntity(bookRequestDTO);
 
         Book updatedBook = this.bookService.addBook(book);
@@ -55,11 +55,11 @@ public class BookController {
     }
 
     @PutMapping(path = "{id}")
-    public ResponseEntity<APIResponse> updateBook(@PathVariable("id") long id, @RequestBody @Valid BookRequestDTO bookRequestDTO) throws Exception {
+    public ResponseEntity<APIResponse<Book>> updateBook(@PathVariable("id") long id, @RequestBody @Valid BookRequestDTO bookRequestDTO) {
         Book book = ValueMapper.convertToEntity(bookRequestDTO);
         book.setId(id);
 
-        Book updatedBook = this.bookService.addBook(book);
+        Book updatedBook = this.bookService.updateBook(book);
         APIResponse<Book> response = APIResponse
                 .<Book>builder()
                 .status(RESPONSE_STATUS)
@@ -70,11 +70,9 @@ public class BookController {
     }
 
     @DeleteMapping(path = "{id}")
-    public ResponseEntity<APIResponse> deleteBook(@PathVariable("id") long id) throws Exception {
+    public ResponseEntity<?> deleteBook(@PathVariable("id") long id) {
         this.bookService.deleteBook(id);
 
-        APIResponse response = APIResponse.builder().status(RESPONSE_STATUS).build();
-
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(APIResponse.builder().status(RESPONSE_STATUS).build(), HttpStatus.OK);
     }
 }
