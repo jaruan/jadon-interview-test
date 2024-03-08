@@ -3,13 +3,13 @@ import { Space, Table, Button, Modal, Pagination } from "antd";
 import styles from "./styles.module.scss";
 import EditBookModal from "./components/EditBookModal";
 import { createBook, deleteBook, getBooks, updateBook } from "../../api/book";
-import { IBookDTO, IBookResponseDTO } from "../../dto/book";
+import { IBookDTO, IBookDTOWithPage } from "../../dto/book";
 
 const { Column } = Table;
 
 export default function Book() {
   const [isOpenEditBookModal, setOpenEditBookModal] = useState(false);
-  const [bookResponse, setBookResponse] = useState<IBookResponseDTO>({
+  const [bookResponse, setBookResponse] = useState<IBookDTOWithPage>({
     results: [],
     totalPage: 0,
   });
@@ -28,6 +28,7 @@ export default function Book() {
 
   useEffect(() => {
     fetchBooks(currentPageIndex);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSubmitForm = async (bookRequestDTO: IBookDTO) => {
