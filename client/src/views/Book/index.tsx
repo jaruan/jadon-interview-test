@@ -1,44 +1,65 @@
 import React, { useEffect, useState } from "react";
-import { Space, Table, Button } from "antd";
+import { Space, Table, Button, Modal } from "antd";
 import styles from "./styles.module.scss";
-import ActionModal from "./components/ActionModal";
+import EditBookModal from "./components/EditBookModal";
+import { createBook, deleteBook, getBooks, updateBook } from "../../api/book";
+import { IBookRequestDTO, IBookResponseDTO } from "../../dto/book";
 
 const { Column } = Table;
 
-interface DataType {
-  id: React.Key;
-  title: String;
-  author: String;
-  publicationYear: String;
-}
-
-const data: DataType[] = [
-  {
-    id: 1,
-    title: "title",
-    author: "author",
-    publicationYear: "2014",
-  },
-  {
-    id: 2,
-    title: "title2",
-    author: "author2",
-    publicationYear: "2015",
-  },
-];
-
 export default function Book() {
-  const [isOpenActionModal, setOpenActionModal] = useState(false);
-  console.log(isOpenActionModal);
+  const [isOpenEditBookModal, setOpenEditBookModal] = useState(false);
+  const [books, setBooks] = useState<IBookResponseDTO[]>([]);
+  const [editableBook, setEditableBook] = useState<IBookResponseDTO | null>();
+  useState(false);
 
-  useEffect(() => {}, []);
+  const fetchBooks = async () => {
+    const books = await getBooks();
+    setBooks(books);
+  };
+
+  useEffect(() => {
+    fetchBooks();
+  }, []);
+
+  const handleSubmitForm = async (bookRequestDTO: IBookRequestDTO) => {
+    if (bookRequestDTO.id) {
+      await updateBook(bookRequestDTO.id, bookRequestDTO);
+    } else {
+      await createBook(bookRequestDTO);
+    }
+    setOpenEditBookModal(false);
+    fetchBooks();
+  };
+
+  const handleEditBook = (book: IBookResponseDTO | null) => {
+    setEditableBook(book);
+    setOpenEditBookModal(true);
+  };
+
+  const handleDeleteBook = (book: IBookResponseDTO) => {
+    Modal.confirm({
+      title: "Delete Book",
+      content: `Are you sure you want to delete this book <${book.title}>?`,
+      footer: (_, { OkBtn, CancelBtn }) => (
+        <>
+          <CancelBtn />
+          <OkBtn />
+        </>
+      ),
+      onOk: async () => {
+        await deleteBook(book.id);
+        fetchBooks();
+      },
+    });
+  };
 
   return (
     <div className={styles.container}>
-      <Button type="primary" onClick={() => setOpenActionModal(true)}>
+      <Button type="primary" onClick={() => handleEditBook(null)}>
         Add Book
       </Button>
-      <Table dataSource={data}>
+      <Table dataSource={books}>
         <Column title="Id" dataIndex="id" key="id" />
         <Column title="Title" dataIndex="title" key="title" />
         <Column title="Author" dataIndex="author" key="author" />
@@ -51,21 +72,28 @@ export default function Book() {
         <Column
           title="Action"
           key="action"
-          render={(_: any, record: DataType) => (
+          render={(_: any, record: IBookResponseDTO) => (
             <Space size="middle">
-              <Button type="link" onClick={() => {}}>
+              <Button type="link" onClick={() => handleEditBook(record)}>
                 Edit
               </Button>
-              <Button type="link">Delete</Button>
+              <Button type="link" onClick={() => handleDeleteBook(record)}>
+                Delete
+              </Button>
             </Space>
           )}
         />
       </Table>
-      <ActionModal
-        header="Edit Book"
-        visible={isOpenActionModal}
-        onClose={() => setOpenActionModal(false)}
-      />
+      {isOpenEditBookModal && (
+        <EditBookModal
+          data={editableBook}
+          header="Edit Book"
+          onClose={() => setOpenEditBookModal(false)}
+          onSubmitForm={(bookRequestDTO: IBookRequestDTO) =>
+            handleSubmitForm(bookRequestDTO)
+          }
+        />
+      )}
     </div>
   );
 }
