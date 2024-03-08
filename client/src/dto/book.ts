@@ -1,5 +1,5 @@
-export interface IBookRequestDTO {
-  id?: string;
+export interface IBookDTO {
+  id: string;
   title: string;
   author?: string;
   isbn?: string;
@@ -7,9 +7,6 @@ export interface IBookRequestDTO {
 }
 
 export interface IBookResponseDTO {
-  id: string;
-  title: string;
-  author?: string;
-  isbn?: string;
-  publicationYear?: string;
+  results: IBookDTO[];
+  totalPage: number;
 }
