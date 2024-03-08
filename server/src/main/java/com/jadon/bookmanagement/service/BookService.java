@@ -18,29 +18,29 @@ public class BookService {
 
     public Book getBook(long id) {
 
-        return this.bookRepository.findById(id).orElseThrow(() -> new NotFoundException("Book with id " + id + " does not exist"));
+        return bookRepository.findById(id).orElseThrow(() -> new NotFoundException("Book with id " + id + " does not exist"));
     }
 
     public List<Book> getBooks() {
-        return this.bookRepository.findAll();
+        return bookRepository.findAll();
     }
 
     public Book addBook(Book book) {
-        return this.bookRepository.save(book);
+        return bookRepository.save(book);
     }
 
     public Book updateBook(Book book) {
-        this.checkExisting(book.getId());
-        return this.bookRepository.save(book);
+        checkExisting(book.getId());
+        return bookRepository.save(book);
     }
 
     public void deleteBook(long id) {
-        this.checkExisting(id);
-        this.bookRepository.deleteById(id);
+        checkExisting(id);
+        bookRepository.deleteById(id);
     }
 
     public void checkExisting(long id) {
-        boolean isExisted = this.bookRepository.existsById(id);
+        boolean isExisted = bookRepository.existsById(id);
         if (!isExisted) {
             throw new NotFoundException("Book with id " + id + " does not exist");
         }
