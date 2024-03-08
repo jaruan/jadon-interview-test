@@ -9,9 +9,12 @@ import lombok.Data;
 @AllArgsConstructor
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class APIResponse<T> {
+public class APIResponse<T>{
 
     private String status;
     private T results;
     private String errorMessage;
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+    private int totalPage;
+
 }

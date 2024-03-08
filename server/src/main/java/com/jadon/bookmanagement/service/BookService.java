@@ -5,6 +5,9 @@ import com.jadon.bookmanagement.exception.NotFoundException;
 import com.jadon.bookmanagement.repository.BookRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,8 +24,9 @@ public class BookService {
         return bookRepository.findById(id).orElseThrow(() -> new NotFoundException("Book with id " + id + " does not exist"));
     }
 
-    public List<Book> getBooks() {
-        return bookRepository.findAll();
+    public Page<Book> getBooks(int skip, int limit) {
+        PageRequest pageRequest = PageRequest.of(skip, limit);
+        return bookRepository.findAll(pageRequest);
     }
 
     public Book addBook(Book book) {

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -37,14 +38,21 @@ public class BookControllerTest {
         mockBooks.add(new Book(1L, "Book 1", "Author 1", "2024", "978-1-234567-89-0", LocalDate.parse("2024-01-01"), LocalDate.parse("2024-01-01")));
         mockBooks.add(new Book(1L, "Book 2", "Author 2", "2023", "888-1-234567-89-0", LocalDate.parse("2024-01-01"), LocalDate.parse("2024-01-01")));
 
-        when(bookService.getBooks()).thenReturn(mockBooks);
+        int skip = 0;
+        int limit = 10;
+        Page mockPage = mock(Page.class);
+        when(mockPage.getTotalPages()).thenReturn(2);
+        when(mockPage.toList()).thenReturn(mockBooks);
 
-        ResponseEntity<APIResponse<List<Book>>> response = bookController.getBooks();
+        when(bookService.getBooks(skip, limit)).thenReturn(mockPage);
+
+        ResponseEntity<APIResponse<List<Book>>> response = bookController.getBooks(skip, limit);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(2, Objects.requireNonNull(response.getBody()).getResults().size());
+        assertEquals(2, Objects.requireNonNull(response.getBody()).getTotalPage());
         assertEquals("success", response.getBody().getStatus());
-        verify(bookService, times(1)).getBooks();
+        assertEquals(mockBooks, response.getBody().getResults());
+        assertEquals(null, response.getBody().getErrorMessage());
     }
 
     @Test

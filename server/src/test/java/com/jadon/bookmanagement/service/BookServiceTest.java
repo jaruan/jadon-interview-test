@@ -5,9 +5,12 @@ import com.jadon.bookmanagement.exception.NotFoundException;
 import com.jadon.bookmanagement.repository.BookRepository;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.Arrays;
 import java.util.List;
@@ -37,13 +40,13 @@ public class BookServiceTest {
 
     @Test
     public void testGetBooks() {
-        Book book1 = new Book();
-        Book book2 = new Book();
-        when(bookRepository.findAll()).thenReturn(Arrays.asList(book1, book2));
+        int skip = 0;
+        int limit = 10;
+        Page mockPage = mock(Page.class);
+        when(bookRepository.findAll(PageRequest.of(skip, limit))).thenReturn(mockPage);
 
-        List<Book> result = bookService.getBooks();
-
-        assertEquals(2, result.size());
+        Page<Book> result = bookService.getBooks(skip, limit);
+        assertEquals(mockPage, result);
     }
 
     @Test
