@@ -29,7 +29,12 @@ public class BookController {
     @GetMapping
     public ResponseEntity<APIResponse<List<Book>>> getBooks(@RequestParam(defaultValue = "0") int skip, @RequestParam(defaultValue = "10") int limit) {
         Page<Book> page =  bookService.getBooks(skip, limit);
-        APIResponse<List<Book>> response = APIResponse.<List<Book>>builder().status(RESPONSE_STATUS).results(page.toList()).build();
+        APIResponse<List<Book>> response = APIResponse
+                .<List<Book>>builder()
+                .status(RESPONSE_STATUS)
+                .totalPage(page.getTotalPages())
+                .results(page.toList())
+                .build();
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
