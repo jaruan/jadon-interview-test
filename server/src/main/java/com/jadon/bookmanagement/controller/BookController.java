@@ -7,6 +7,7 @@ import com.jadon.bookmanagement.service.BookService;
 import com.jadon.bookmanagement.util.ValueMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "api/v1/books")
 @AllArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
 public class BookController {
 
     private static final String RESPONSE_STATUS = "success";
@@ -25,9 +27,9 @@ public class BookController {
     @Autowired
     private final BookService bookService;
     @GetMapping
-    public ResponseEntity<APIResponse<List<Book>>> getBooks() {
-        List<Book> books =  bookService.getBooks();
-        APIResponse<List<Book>> response = APIResponse.<List<Book>>builder().status(RESPONSE_STATUS).results(books).build();
+    public ResponseEntity<APIResponse<List<Book>>> getBooks(@RequestParam(defaultValue = "0") int skip, @RequestParam(defaultValue = "10") int limit) {
+        Page<Book> page =  bookService.getBooks(skip, limit);
+        APIResponse<List<Book>> response = APIResponse.<List<Book>>builder().status(RESPONSE_STATUS).results(page.toList()).build();
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
