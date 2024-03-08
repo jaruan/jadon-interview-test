@@ -1,8 +1,7 @@
 package com.jadon.bookmanagement.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -11,7 +10,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "book")
-@AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class Book {
 
@@ -26,8 +25,8 @@ public class Book {
     @Column(name = "author", columnDefinition = "VARCHAR(255)")
     private String author;
 
-    @Column(name = "publication_year")
-    private LocalDate publicationYear;
+    @Column(name = "publication_year", columnDefinition = "VARCHAR(4)")
+    private String publicationYear;
 
     @Column(name = "isbn", columnDefinition = "VARCHAR(17)")
     private String isbn;

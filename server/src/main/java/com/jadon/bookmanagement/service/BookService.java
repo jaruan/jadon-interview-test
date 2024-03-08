@@ -28,9 +28,9 @@ public class BookService {
         return this.bookRepository.save(book);
     }
 
-    public Book updateBook(Book updatedBook) throws Exception {
-        this.checkExisting(updatedBook.getId());
-        return this.bookRepository.save(updatedBook);
+    public Book updateBook(Book book) throws Exception {
+        this.checkExisting(book.getId());
+        return this.bookRepository.save(book);
     }
 
     public void deleteBook(long id) throws Exception {
