@@ -86,7 +86,7 @@ export default function Book() {
         <Column
           title="Action"
           key="action"
-          render={(_: any, record: IBookDTO) => (
+          render={(_: unknown, record: IBookDTO) => (
             <Space size="middle">
               <Button type="link" onClick={() => handleEditBook(record)}>
                 Edit
