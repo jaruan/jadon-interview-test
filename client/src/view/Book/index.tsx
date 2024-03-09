@@ -73,7 +73,7 @@ export default function Book() {
       <Button type="primary" onClick={() => handleEditBook(null)}>
         Add Book
       </Button>
-      <Table dataSource={bookResponse.results} pagination={false}>
+      <Table rowKey="id" dataSource={bookResponse.results} pagination={false}>
         <Column title="Id" dataIndex="id" key="id" />
         <Column title="Title" dataIndex="title" key="title" />
         <Column title="Author" dataIndex="author" key="author" />
