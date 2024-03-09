@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { App as AntdApp } from "antd";
 
-import Book from "./views/Book";
+import Book from "./view/Book";
 
 function App() {
   return (
