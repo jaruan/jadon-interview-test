@@ -7,6 +7,7 @@ export default defineConfig({
     setupFiles: ["./setup.ts"],
     coverage: {
       provider: "istanbul", // or 'v8'
+      exclude: ["**/api/**", "**/App.*", "**/main.*", "**/*.cjs"],
     },
   },
 });

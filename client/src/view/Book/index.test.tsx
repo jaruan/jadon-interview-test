@@ -16,7 +16,8 @@ describe("Book Page", () => {
 
   const createBookFn = vi.spyOn(api, "createBook");
   const updateBookFn = vi.spyOn(api, "updateBook");
-  vi.spyOn(api, "getBooks").mockResolvedValue({
+  const deleteBookFn = vi.spyOn(api, "deleteBook");
+  const getBooksFn = vi.spyOn(api, "getBooks").mockResolvedValue({
     results: mockBookResults,
     totalPage: 1,
   });
@@ -77,6 +78,42 @@ describe("Book Page", () => {
         title: "updated title",
         author: "book author",
       });
+    });
+  });
+
+  it("should invoke deleteBook function when confirming deleting a book", async () => {
+    deleteBookFn.mockResolvedValue();
+
+    render(<Book />);
+    await waitFor(() => {
+      const editBookLink = screen.getByRole("button", { name: "Delete" });
+      fireEvent.click(editBookLink);
+    });
+
+    act(() => {
+      const confirmDeleteButton = screen.getByRole("button", { name: "OK" });
+      fireEvent.click(confirmDeleteButton);
+    });
+
+    await waitFor(() => {
+      expect(deleteBookFn).toBeCalledWith(1);
+    });
+  });
+
+  it("should invoke getBooks function when changing the page", async () => {
+    const mockBooks = [];
+    for (let i = 0; i < 20; i++) {
+      mockBooks.push({ id: i + 1, title: `title ${i}` });
+    }
+    getBooksFn.mockResolvedValue({ results: mockBooks, totalPage: 2 });
+
+    render(<Book />);
+    await waitFor(() => {
+      const li = screen.getByTitle("2");
+      fireEvent.click(li.children[0]);
+    });
+    await waitFor(() => {
+      expect(getBooksFn).toHaveBeenLastCalledWith(1);
     });
   });
 });
