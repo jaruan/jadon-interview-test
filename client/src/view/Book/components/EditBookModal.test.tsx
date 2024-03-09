@@ -2,17 +2,6 @@ import { describe, it, expect, afterEach } from "vitest";
 import { render } from "@testing-library/react";
 import EditBookModal from "./EditBookModal";
 
-window.matchMedia = () => ({
-  matches: false,
-  media: "",
-  onchange: null,
-  addListener: () => {},
-  removeListener: () => {},
-  addEventListener: () => {},
-  removeEventListener: () => {},
-  dispatchEvent: () => {},
-});
-
 describe("EditBookModal", () => {
   let currentRenderedComponent: { unmount: () => void };
   afterEach(() => {
