@@ -1,17 +1,10 @@
-import { describe, it, expect, afterEach } from "vitest";
-import { render } from "@testing-library/react";
+import { describe, it, expect, vi } from "vitest";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import EditBookModal from "./EditBookModal";
 
 describe("EditBookModal", () => {
-  let currentRenderedComponent: { unmount: () => void };
-  afterEach(() => {
-    if (currentRenderedComponent) {
-      currentRenderedComponent.unmount();
-    }
-  });
-
   it("should not fullfil the book info when data is null", () => {
-    currentRenderedComponent = render(
+    render(
       <EditBookModal
         header="Edit Book"
         data={null}
@@ -19,8 +12,7 @@ describe("EditBookModal", () => {
         onSubmitForm={() => {}}
       />
     );
-
-    expect(document.querySelector("input[id='basic_id']")).toBeNull();
+    expect(screen.queryByTitle("Id")).toBeNull();
   });
 
   it("should fullfil the book info when data is not null", () => {
@@ -29,7 +21,7 @@ describe("EditBookModal", () => {
       title: "title",
     };
 
-    currentRenderedComponent = render(
+    render(
       <EditBookModal
         header="Edit Book"
         data={mockData}
@@ -37,15 +29,47 @@ describe("EditBookModal", () => {
         onSubmitForm={() => {}}
       />
     );
+    expect(screen.getByLabelText("Id").getAttribute("value")).toBe("1");
+    expect(screen.getByLabelText("Title").getAttribute("value")).toBe("title");
+    expect(screen.getByLabelText("Author").getAttribute("value")).toBe("");
+  });
 
-    expect(
-      document.querySelector("input[id='basic_id']")?.getAttribute("value")
-    ).toBe("1");
-    expect(
-      document.querySelector("input[id='basic_title']")?.getAttribute("value")
-    ).toBe("title");
-    expect(
-      document.querySelector("input[id='basic_author']")?.getAttribute("value")
-    ).toBe("");
+  it("should call onSubmitForm when submit button is clicked", async () => {
+    const mockOnSubmitFormFn = vi.fn();
+    render(
+      <EditBookModal
+        header="Edit Book"
+        data={null}
+        onClose={() => {}}
+        onSubmitForm={mockOnSubmitFormFn}
+      />
+    );
+    const titleInput = screen.getByLabelText("Title");
+    fireEvent.input(titleInput, { target: { value: "new title" } });
+    const authorInput = screen.getByLabelText("Author");
+    fireEvent.input(authorInput, { target: { value: "new author" } });
+    const submitButton = screen.getByText("Submit");
+    fireEvent.click(submitButton);
+    await waitFor(() => {
+      expect(mockOnSubmitFormFn).toBeCalledWith({
+        title: "new title",
+        author: "new author",
+      });
+    });
+  });
+
+  it("should call onClose when cancel button is clicked", () => {
+    const mockOnCloseFn = vi.fn();
+    render(
+      <EditBookModal
+        header="Edit Book"
+        data={null}
+        onClose={mockOnCloseFn}
+        onSubmitForm={() => {}}
+      />
+    );
+    const cancelButton = screen.getByRole("button", { name: "Close" });
+    fireEvent.click(cancelButton);
+    expect(mockOnCloseFn).toBeCalled();
   });
 });
