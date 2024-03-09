@@ -73,7 +73,7 @@ export default function Book() {
       <Button type="primary" onClick={() => handleEditBook(null)}>
         Add Book
       </Button>
-      <Table dataSource={bookResponse.results} pagination={false}>
+      <Table rowKey="id" dataSource={bookResponse.results} pagination={false}>
         <Column title="Id" dataIndex="id" key="id" />
         <Column title="Title" dataIndex="title" key="title" />
         <Column title="Author" dataIndex="author" key="author" />
@@ -86,7 +86,7 @@ export default function Book() {
         <Column
           title="Action"
           key="action"
-          render={(_: any, record: IBookDTO) => (
+          render={(_: unknown, record: IBookDTO) => (
             <Space size="middle">
               <Button type="link" onClick={() => handleEditBook(record)}>
                 Edit
