@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This web application based on **Vite** and **React** combines two powerful tools to create modern and efficient web experiences. Additionally, UI components are powered by **Ant Design**.
+This web application based on **Vite**, **React**, **TypeScript**, and **Ant Design** combines several powerful tools and libraries to create a modern, type-safe, and visually appealing UI.
 
 ## Quick Start
 
