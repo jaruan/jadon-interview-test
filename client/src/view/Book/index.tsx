@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Space, Table, Button, Modal, Pagination } from "antd";
+import { Space, Table, Button, Modal, Pagination, message } from "antd";
 import styles from "./styles.module.scss";
 import EditBookModal from "./components/EditBookModal";
 import { createBook, deleteBook, getBooks, updateBook } from "../../api/book";
@@ -8,6 +8,8 @@ import { IBookDTO, IBookDTOWithPage } from "../../dto/book";
 const { Column } = Table;
 
 export default function Book() {
+  const [messageApi, contextHolder] = message.useMessage();
+
   const [isOpenEditBookModal, setOpenEditBookModal] = useState(false);
   const [bookResponse, setBookResponse] = useState<IBookDTOWithPage>({
     results: [],
@@ -34,8 +36,16 @@ export default function Book() {
   const handleSubmitForm = async (bookRequestDTO: IBookDTO) => {
     if (bookRequestDTO.id) {
       await updateBook(bookRequestDTO.id, bookRequestDTO);
+      messageApi.open({
+        type: "success",
+        content: "Book has been updated successfully!",
+      });
     } else {
       await createBook(bookRequestDTO);
+      messageApi.open({
+        type: "success",
+        content: "Book has been saved successfully!",
+      });
     }
     setOpenEditBookModal(false);
     fetchBooks(currentPageIndex);
@@ -58,6 +68,10 @@ export default function Book() {
       ),
       onOk: async () => {
         await deleteBook(book.id);
+        messageApi.open({
+          type: "success",
+          content: "Book has been deleted successfully!",
+        });
         fetchBooks(currentPageIndex);
       },
     });
@@ -70,6 +84,7 @@ export default function Book() {
 
   return (
     <div className={styles.container}>
+      {contextHolder}
       <Button type="primary" onClick={() => handleEditBook(null)}>
         Add Book
       </Button>
