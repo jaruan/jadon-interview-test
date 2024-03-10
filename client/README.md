@@ -13,7 +13,7 @@ This web client based on **Vite**, **React**, **TypeScript**, and **Ant Design**
 ## Quick Start
 
 **Notes:**
-The client relies on the server to provide the data source, so make sure the server is started before you run the following command, please refer to [here]() for details.
+The client relies on the server to provide the data source, so make sure the server is started before you run the following command, please refer to [here](https://github.com/jaruan/jadon-interview-test/tree/qa/server#readme) for details.
 
 ### Running locally via docker-compose
 
