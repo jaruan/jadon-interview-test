@@ -1,0 +1,34 @@
+version: "3"
+
+services:
+  db:
+    container_name: jadon-interview-test-db
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: testdb
+    volumes:
+      - ./data:/var/lib/mysql
+    ports:
+      - "3308:3306"
+    networks:
+      - test-network
+  app:
+    container_name: jadon-interview-test-server
+    restart: always
+    build:
+      dockerfile: Dockerfile
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - SPRING_DATASOURCE_URL=jdbc:mysql://jadon-interview-test-db:3306/testdb
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    networks:
+      - test-network
+
+networks:
+    test-network:

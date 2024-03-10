@@ -17,9 +17,9 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping(path = "api/v1/books")
+@RequestMapping(path = "/api/books")
 @AllArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins= "*")
 public class BookController {
 
     private static final String RESPONSE_STATUS = "success";

@@ -7,6 +7,7 @@
 	<artifactId>jadon-springboot</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<properties>
+		<start-class>com.jadon.bookmanagement.Application</start-class>
 		<testcontainers.version>1.18.3</testcontainers.version>
 	</properties>
 	<dependencyManagement>
@@ -25,9 +26,13 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<source>9</source>
-					<target>9</target>
+					<mainClass>com.jadon.bookmanagement.Application</mainClass>
+					<layout>JAR</layout>
 				</configuration>
 			</plugin>
 		</plugins>
