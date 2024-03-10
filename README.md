@@ -32,5 +32,5 @@ Location: [ec2-54-152-41-45.compute-1.amazonaws.com](http://ec2-54-152-41-45.com
 - Maven
 
 ### Coding Details
-About client-side: [https://github.com/jaruan/jadon-interview-test/tree/qa/client#readme](https://github.com/jaruan/jadon-interview-test/tree/qa/client#readme)
-About server-side: [https://github.com/jaruan/jadon-interview-test/tree/qa/server#readme](https://github.com/jaruan/jadon-interview-test/tree/qa/server#readme)
+- About client-side: [https://github.com/jaruan/jadon-interview-test/tree/qa/client#readme](https://github.com/jaruan/jadon-interview-test/tree/qa/client#readme)
+- About server-side: [https://github.com/jaruan/jadon-interview-test/tree/qa/server#readme](https://github.com/jaruan/jadon-interview-test/tree/qa/server#readme)
