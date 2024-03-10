@@ -5,6 +5,7 @@ import com.jadon.bookmanagement.dto.BookRequestDTO;
 import com.jadon.bookmanagement.entity.Book;
 import com.jadon.bookmanagement.service.BookService;
 import com.jadon.bookmanagement.util.ValueMapper;
+import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-
+@Api(tags = "books")
 @RestController
 @RequestMapping(path = "/api/books")
 @AllArgsConstructor
