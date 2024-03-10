@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+  web:
+    container_name: jadon-interview-test-client
+    restart: always
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - "8081:80"
