@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Space, Table, Button, Modal, Pagination } from "antd";
 import styles from "./styles.module.scss";
 import EditBookModal from "./components/EditBookModal";
