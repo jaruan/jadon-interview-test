@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This web server based on **Spring Boot**,
+This web server based on the **Spring Boot** framework is a powerful and efficient solution for building web applications. By integrating JPA (Java Persistence API) and MySQL, you can easily store and retrieve data from a relational database.
 
 ### Requirements
 
@@ -16,17 +16,42 @@ This web server based on **Spring Boot**,
 
 ### Running locally via docker-compose
 
-First, please re
+Please follow steps to run the web server locally.
 
+First, package the source code and export `jar`
 
 ```shell
-docker-compose -f docker-compose.yml up
+bash package.bat
 ```
 
-It combined **server** and **MySQL** two
+Second, run the web server via `docker-compose`. The server and database both will be started up.
+
+```shell
+docker-compose -f docker-compose.dev.yml up
+```
 
 host: <http://localhost:8080>
 
 ### Explore Rest APIs
 
-Once the application is running, you can explore the swagger API doc: <http://localhost:8080/swagger-ui/#/books>
+Once the application is running, you can explore the swagger API doc: <http://localhost:8080/swagger-ui.html#/books>
+
+## Development
+
+**Environments**
+
+- **development**
+  Building the combination of server and database locally without any coding works in backend. It usually focus on developing front-end or reviewing API endpoints.
+
+- **local**
+  Building the server locally with any coding works.
+
+  Since coding works rely the data persistence, we can build a testing database via `docker-compose`.
+
+  ```shell
+  docker-compose -f docker-compose.local.yml
+  ```
+
+### Unit Test
+
+Basics of Unit Testing, including `controller` and `service`
