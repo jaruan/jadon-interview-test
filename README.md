@@ -6,9 +6,9 @@ Hi 👋, I'm Jadon Ruan. I'm grateful for this opportunity to interview with you
 
 Please review the results of the coding test.
 
-Client location: [link](http://ec2-54-152-41-45.compute-1.amazonaws.com)
+- Client location: [link](http://ec2-54-152-41-45.compute-1.amazonaws.com)
 
-Server API docs location: [link](http://ec2-54-152-41-45.compute-1.amazonaws.com:8080/swagger-ui.html#/books)
+- Server API docs location: [link](http://ec2-54-152-41-45.compute-1.amazonaws.com:8080/swagger-ui.html#/books)
 
 ## About Tech Stack
 
