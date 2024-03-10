@@ -19,7 +19,7 @@ public class BookRequestDTO {
     @Length(min = 4, max = 4)
     private String publicationYear;
 
-    @Length(min = 13, max = 17, message = "The length of ISBN should be more than 13 and less than 17")
+    @Length(min = 10, max = 13, message = "The length of ISBN should be more than 10 and less than 13")
     private String isbn;
 
 }

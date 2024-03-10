@@ -38,7 +38,7 @@ public class Book {
     private String publicationYear;
 
     @ApiModelProperty(value = "Book ISBN", example = "9-780-061122415")
-    @Column(name = "isbn", columnDefinition = "VARCHAR(17)")
+    @Column(name = "isbn", columnDefinition = "VARCHAR(13)")
     private String isbn;
 
     @Column(name = "created_at", updatable = false, nullable = false)

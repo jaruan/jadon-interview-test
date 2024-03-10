@@ -24,10 +24,17 @@ docker-compose -f docker-compose.yml up
 After running the application via docker, please click <http://localhost:3000> to visit the page
 
 **Notice**
-If you would like to stop the client container, you can execute the following command.
+
+- If you would like to stop the client container, you can execute the following command.
 
 ```shell
 docker-compose -f docker-compose.yml down
+```
+
+- If codes have been changed, please rebuild the docker image.
+
+```shell
+docker-compose -f docker-compose.dev.yml up --build
 ```
 
 ## Development

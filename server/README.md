@@ -32,6 +32,20 @@ docker-compose -f docker-compose.dev.yml up
 
 host: <http://localhost:8080>
 
+**Notice**
+
+- If you would like to stop the server container, you can execute the following command.
+
+```shell
+docker-compose -f docker-compose.yml down
+```
+
+- If codes have been changed, please rebuild the docker image.
+
+```shell
+docker-compose -f docker-compose.dev.yml up --build
+```
+
 ### Explore Rest APIs
 
 Once the application is running, you can explore the swagger API doc: <http://localhost:8080/swagger-ui.html#/books>
