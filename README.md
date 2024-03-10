@@ -14,13 +14,15 @@ Location: [ec2-54-152-41-45.compute-1.amazonaws.com](http://ec2-54-152-41-45.com
 
 - Development
   - Vite + React + TS + Ant Design
-- Testing
+- Unit Test
   - Vitest + @testing-library/react
 
 ### Back-end
 
 - Development
-  - Spring Boot + Java + JPA
+  - Spring Boot + JPA
+- Unit Test
+  - Spring Boot Test + JUnit
 - Database
   - MySQL 8.0
 
