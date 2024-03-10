@@ -5,4 +5,4 @@ node_modules
 LICENSE
 .git
 .DS_Store
-.env
+coverage
