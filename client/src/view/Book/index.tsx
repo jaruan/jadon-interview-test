@@ -82,6 +82,7 @@ export default function Book() {
           dataIndex="publicationYear"
           key="publicationYear"
         />
+        <Column title="ISBN" dataIndex="isbn" key="isbn" />
 
         <Column
           title="Action"

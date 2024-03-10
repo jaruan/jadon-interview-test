@@ -1,6 +1,6 @@
 import { Modal } from "antd";
-
-import { Button, Form, Input, type FormProps } from "antd";
+import dayjs from "dayjs";
+import { Button, Form, Input, type FormProps, DatePicker } from "antd";
 import { IBookDTO } from "../../../dto/book";
 
 export default function EditBookModal(props: IEditBookModalProps) {
@@ -47,8 +47,15 @@ export default function EditBookModal(props: IEditBookModalProps) {
             <Input />
           </Form.Item>
 
-          <Form.Item<IBookDTO> label="Publication Year" name="publicationYear">
-            <Input />
+          <Form.Item<IBookDTO>
+            label="Publication Year"
+            name="publicationYear"
+            getValueProps={(year: string) => ({
+              value: year ? dayjs(year, "YYYY") : dayjs(),
+            })}
+            getValueFromEvent={(date) => date.format("YYYY")}
+          >
+            <DatePicker picker="year" />
           </Form.Item>
 
           <Form.Item<IBookDTO> label="ISBN" name="isbn">
