@@ -34,7 +34,7 @@ docker-compose -f docker-compose.yml down
 - If codes have been changed, please rebuild the docker image.
 
 ```shell
-docker-compose -f docker-compose.dev.yml up --build
+docker-compose -f docker-compose.yml up --build
 ```
 
 ## Development
