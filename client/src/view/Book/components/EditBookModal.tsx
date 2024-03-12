@@ -5,6 +5,7 @@ import { IBookDTO } from "../../../dto/book";
 
 export default function EditBookModal(props: IEditBookModalProps) {
   const onFinish: FormProps<IBookDTO>["onFinish"] = (values) => {
+    console.log("Success:", values);
     props.onSubmitForm(values);
   };
 
@@ -58,7 +59,26 @@ export default function EditBookModal(props: IEditBookModalProps) {
             <DatePicker picker="year" />
           </Form.Item>
 
-          <Form.Item<IBookDTO> label="ISBN" name="isbn">
+          <Form.Item<IBookDTO>
+            label="ISBN"
+            name="isbn"
+            rules={[
+              {
+                validator: (_, value) => {
+                  if (value) {
+                    if (value.length >= 10 && value.length <= 13) {
+                      return Promise.resolve();
+                    } else {
+                      return Promise.reject(
+                        "ISBN must be between 10 and 13 digits!"
+                      );
+                    }
+                  }
+                  return Promise.resolve();
+                },
+              },
+            ]}
+          >
             <Input />
           </Form.Item>
 
