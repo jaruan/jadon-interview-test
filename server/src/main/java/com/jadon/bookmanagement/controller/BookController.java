@@ -20,7 +20,6 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "/api/books")
 @AllArgsConstructor
-@CrossOrigin(origins= "*")
 public class BookController {
 
     private static final String RESPONSE_STATUS = "success";
