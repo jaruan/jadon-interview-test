@@ -14,7 +14,8 @@ services:
     ports:
       - "3308:3306"
     networks:
-      - test-network
+      test-network:
+        ipv4_address: 172.18.0.2
   app:
     container_name: jadon-interview-test-server
     restart: always
@@ -27,7 +28,14 @@ services:
     depends_on:
       - db
     networks:
-      - test-network
+      test-network:
+        ipv4_address: 172.18.0.3
 
 networks:
     test-network:
+      driver: bridge
+      ipam:
+        driver: default
+        config:
+          - subnet: 172.18.0.0/16
+
