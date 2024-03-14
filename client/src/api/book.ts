@@ -2,7 +2,7 @@ import axios from "axios";
 import { IBookDTO, IBookDTOWithPage } from "../dto/book";
 
 const httpClient = axios.create({
-  baseURL: import.meta.env.VITE_BASE_URL + "/api",
+  baseURL: "/api",
 });
 
 export const getBooks = async (
