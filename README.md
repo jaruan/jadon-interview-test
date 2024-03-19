@@ -1,14 +1,8 @@
-# Jadon Interview Coding Test
+# The best practice of React + Spring Boot Full Stack Developement 
 
 ## Introduction
 
-Hi 👋, I'm Jadon Ruan. I'm grateful for this opportunity to interview with you! And I enjoy participating in this coding test.
-
-Please review the results of the coding test.
-
-- Client location: [link](http://ec2-54-152-41-45.compute-1.amazonaws.com)
-
-- Server API docs location: [link](http://ec2-54-152-41-45.compute-1.amazonaws.com:8080/swagger-ui.html#/books)
+Hi 👋, I'm Jadon Ruan. This is a simple demo of React + Spring Boot full-stack development.
 
 ## About Tech Stack
 
